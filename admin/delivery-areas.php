@@ -65,57 +65,69 @@ $areas = $db->query("SELECT * FROM delivery_areas ORDER BY is_active DESC, deliv
     </div>
   <?php endif; ?>
 
-  <!-- Areas Table -->
-  <div class="rounded-3xl bg-slate-950 border border-slate-800 overflow-hidden shadow-sm">
-    <div class="overflow-x-auto">
-      <table class="w-full text-left text-xs">
-        <thead>
-          <tr class="border-b border-slate-800 text-slate-400 font-bold uppercase tracking-wider bg-slate-900/40">
-            <th class="py-3.5 px-4">Area Name</th>
-            <th class="py-3.5 px-3">PIN Code</th>
-            <th class="py-3.5 px-3">Delivery Rate</th>
-            <th class="py-3.5 px-3">Min Order</th>
-            <th class="py-3.5 px-3">Est. Transit Time</th>
-            <th class="py-3.5 px-3">Status</th>
-            <th class="py-3.5 px-4 text-right">Actions</th>
-          </tr>
-        </thead>
-        <tbody class="divide-y divide-slate-800">
-          <?php foreach ($areas as $a): ?>
-            <tr class="hover:bg-slate-900/60 transition-colors">
-              <td class="py-3 px-4 font-bold text-white">
+  <!-- Delivery Areas - Responsive Card Grid (No Table) -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+    <?php foreach ($areas as $a): ?>
+      <div class="p-6 rounded-3xl bg-[#09160e] border border-emerald-900/40 hover:border-emerald-600/60 transition-all flex flex-col justify-between space-y-4 group shadow-xl">
+        
+        <!-- Header -->
+        <div class="flex items-start justify-between gap-2">
+          <div class="flex items-center gap-2.5">
+            <div class="w-10 h-10 rounded-2xl bg-emerald-950 border border-emerald-800 text-emerald-400 flex items-center justify-center shrink-0">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+            </div>
+            <div>
+              <h3 class="font-bold text-base text-white group-hover:text-emerald-400 transition-colors">
                 <?= e($a['area_name']) ?>
-              </td>
-              <td class="py-3 px-3 text-slate-400">
-                <?= e($a['pincode']) ?>
-              </td>
-              <td class="py-3 px-3 font-serif font-bold text-emerald-400 text-sm">
-                <?= format_price($a['delivery_charge']) ?>
-              </td>
-              <td class="py-3 px-3 text-slate-300 font-serif">
-                <?= format_price($a['min_order_amount']) ?>
-              </td>
-              <td class="py-3 px-3 text-slate-400">
-                <?= e($a['est_delivery_time']) ?>
-              </td>
-              <td class="py-3 px-3">
-                <a href="/admin/delivery-areas.php?toggle=<?= $a['id'] ?>" 
-                   class="px-2.5 py-1 rounded-full text-[10px] font-bold inline-block <?= $a['is_active'] ? 'bg-emerald-950 text-emerald-300 border border-emerald-800' : 'bg-slate-800 text-slate-400' ?>">
-                  <?= $a['is_active'] ? 'Active in Checkout' : 'Disabled (Hidden)' ?>
-                </a>
-              </td>
-              <td class="py-3 px-4 text-right">
-                <a href="/admin/delivery-areas.php?delete=<?= $a['id'] ?>" 
-                   onclick="return confirm('Delete <?= e(addslashes($a['area_name'])) ?>?')"
-                   class="px-3 py-1.5 rounded-lg bg-rose-950 text-rose-300 hover:bg-rose-900 text-xs font-semibold">
-                  Delete
-                </a>
-              </td>
-            </tr>
-          <?php endforeach; ?>
-        </tbody>
-      </table>
-    </div>
+              </h3>
+              <span class="text-[11px] text-slate-400 font-mono">PIN: <?= e($a['pincode']) ?></span>
+            </div>
+          </div>
+
+          <a href="/admin/delivery-areas.php?toggle=<?= $a['id'] ?>" 
+             class="px-2.5 py-1 rounded-full text-[10px] font-black transition-colors <?= $a['is_active'] ? 'bg-emerald-950 text-emerald-300 border border-emerald-800' : 'bg-slate-900 text-slate-400 border border-slate-700' ?>">
+            <?= $a['is_active'] ? '● Active' : '● Disabled' ?>
+          </a>
+        </div>
+
+        <!-- Metric Details -->
+        <div class="grid grid-cols-3 gap-2 p-3.5 rounded-2xl bg-[#061009] border border-emerald-950 text-center">
+          <div>
+            <span class="text-[10px] uppercase font-bold text-slate-400 block">Fee</span>
+            <span class="font-black text-sm text-emerald-400 block mt-0.5">
+              <?= format_price($a['delivery_charge']) ?>
+            </span>
+          </div>
+          <div class="border-x border-emerald-950">
+            <span class="text-[10px] uppercase font-bold text-slate-400 block">Min Order</span>
+            <span class="font-bold text-sm text-slate-200 block mt-0.5">
+              <?= format_price($a['min_order_amount']) ?>
+            </span>
+          </div>
+          <div>
+            <span class="text-[10px] uppercase font-bold text-slate-400 block">ETA</span>
+            <span class="font-bold text-xs text-slate-300 block mt-0.5 truncate">
+              <?= e($a['est_delivery_time']) ?>
+            </span>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="pt-2 flex items-center justify-between gap-2 border-t border-emerald-950">
+          <a href="/admin/delivery-areas.php?toggle=<?= $a['id'] ?>" 
+             class="text-xs font-bold <?= $a['is_active'] ? 'text-amber-400 hover:underline' : 'text-emerald-400 hover:underline' ?>">
+            <?= $a['is_active'] ? 'Disable Zone' : 'Enable Zone' ?>
+          </a>
+
+          <a href="/admin/delivery-areas.php?delete=<?= $a['id'] ?>" 
+             onclick="return confirm('Delete <?= e(addslashes($a['area_name'])) ?>?')"
+             class="px-3 py-1.5 rounded-xl bg-rose-950/60 hover:bg-rose-900 border border-rose-900/60 text-rose-300 text-xs font-semibold transition-colors">
+            Delete
+          </a>
+        </div>
+
+      </div>
+    <?php endforeach; ?>
   </div>
 
   <!-- ADD AREA MODAL -->

@@ -54,7 +54,10 @@ class CardDeck {
   }
 
   getStepY() {
-    return window.innerWidth >= 1024 ? 22 : 14;
+    if (window.innerWidth >= 1440) return 36;
+    if (window.innerWidth >= 1280) return 30;
+    if (window.innerWidth >= 1024) return 24;
+    return 14;
   }
 
   /**

@@ -92,16 +92,16 @@ require_once __DIR__ . '/includes/header.php';
       </p>
     </div>
 
-    <!-- 3D Card Deck Arena (Responsive: Polish Mobile & Dominant on Desktop) -->
-    <div class="relative max-w-xl sm:max-w-2xl lg:max-w-3xl xl:max-w-4xl mx-auto flex items-center justify-center min-h-[580px] sm:min-h-[630px] md:min-h-[670px] lg:min-h-[730px] xl:min-h-[760px] px-2 sm:px-6">
+    <!-- 3D Card Deck Arena (Much Larger & Visually Dominant on Desktop) -->
+    <div class="relative max-w-xl sm:max-w-2xl md:max-w-3xl lg:max-w-5xl xl:max-w-6xl 2xl:max-w-[1440px] mx-auto flex items-center justify-center min-h-[600px] sm:min-h-[680px] md:min-h-[760px] lg:min-h-[880px] xl:min-h-[960px] 2xl:min-h-[1020px] px-2 sm:px-6 lg:px-12">
       
-      <!-- Circular Left Throw Button -->
+      <!-- Circular Left Throw Button (Positioned comfortably outside large deck) -->
       <button id="coconut-prev-btn" 
               type="button" 
-              class="absolute -left-2 sm:-left-4 md:-left-8 lg:-left-16 xl:-left-20 top-1/2 -translate-y-1/2 z-40 w-11 h-11 sm:w-12 sm:h-12 lg:w-14 lg:h-14 rounded-full bg-white shadow-xl lg:shadow-2xl border border-slate-100 flex items-center justify-center text-slate-700 hover:text-emerald-700 hover:scale-110 active:scale-90 transition-all focus:outline-none"
+              class="absolute -left-2 sm:-left-4 md:-left-6 lg:-left-8 xl:-left-12 2xl:-left-16 top-1/2 -translate-y-1/2 z-40 w-11 h-11 sm:w-12 sm:h-12 lg:w-16 lg:h-16 xl:w-18 xl:h-18 rounded-full bg-white shadow-xl lg:shadow-2xl border border-slate-100 flex items-center justify-center text-slate-700 hover:text-emerald-700 hover:scale-110 active:scale-90 transition-all focus:outline-none"
               title="Swipe Left"
               aria-label="Previous Coconut Drink">
-        <svg class="w-5 h-5 lg:w-6 lg:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg class="w-5 h-5 lg:w-7 lg:h-7 xl:w-8 xl:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/>
         </svg>
       </button>
@@ -109,16 +109,16 @@ require_once __DIR__ . '/includes/header.php';
       <!-- Circular Right Throw Button -->
       <button id="coconut-next-btn" 
               type="button" 
-              class="absolute -right-2 sm:-right-4 md:-right-8 lg:-right-16 xl:-right-20 top-1/2 -translate-y-1/2 z-40 w-11 h-11 sm:w-12 sm:h-12 lg:w-14 lg:h-14 rounded-full bg-white shadow-xl lg:shadow-2xl border border-slate-100 flex items-center justify-center text-slate-700 hover:text-emerald-700 hover:scale-110 active:scale-90 transition-all focus:outline-none"
+              class="absolute -right-2 sm:-right-4 md:-right-6 lg:-right-8 xl:-right-12 2xl:-right-16 top-1/2 -translate-y-1/2 z-40 w-11 h-11 sm:w-12 sm:h-12 lg:w-16 lg:h-16 xl:w-18 xl:h-18 rounded-full bg-white shadow-xl lg:shadow-2xl border border-slate-100 flex items-center justify-center text-slate-700 hover:text-emerald-700 hover:scale-110 active:scale-90 transition-all focus:outline-none"
               title="Swipe Right"
               aria-label="Next Coconut Drink">
-        <svg class="w-5 h-5 lg:w-6 lg:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg class="w-5 h-5 lg:w-7 lg:h-7 xl:w-8 xl:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/>
         </svg>
       </button>
 
-      <!-- The 3D Physical Stack Container (Wider, taller, and visually dominant on desktop) -->
-      <div id="coconut-deck" class="deck-stage relative w-[calc(100vw-36px)] max-w-[350px] sm:max-w-[420px] md:max-w-[460px] lg:max-w-[520px] xl:max-w-[560px] h-[570px] sm:h-[620px] md:h-[660px] lg:h-[720px] xl:h-[750px] select-none perspective-[1200px]">
+      <!-- The 3D Physical Stack Container (Visually large, prominent & dominant on desktop: 780px to 1020px) -->
+      <div id="coconut-deck" class="deck-stage relative w-[calc(100vw-32px)] max-w-[370px] sm:max-w-[480px] md:max-w-[580px] lg:max-w-[780px] xl:max-w-[900px] 2xl:max-w-[1020px] h-[590px] sm:h-[660px] md:h-[740px] lg:h-[860px] xl:h-[930px] 2xl:h-[980px] select-none perspective-[1400px]">
         <?php foreach ($coconutProducts as $idx => $product): ?>
           <!-- Individual Physical Card in 3D Stack -->
           <div class="deck-card absolute inset-0 cursor-grab active:cursor-grabbing will-change-transform" data-index="<?= $idx ?>">
@@ -177,16 +177,16 @@ require_once __DIR__ . '/includes/header.php';
       </p>
     </div>
 
-    <!-- 3D Card Deck Arena for Fresh Juices (Responsive: Polish Mobile & Dominant on Desktop) -->
-    <div class="relative max-w-xl sm:max-w-2xl lg:max-w-3xl xl:max-w-4xl mx-auto flex items-center justify-center min-h-[580px] sm:min-h-[630px] md:min-h-[670px] lg:min-h-[730px] xl:min-h-[760px] px-2 sm:px-6">
+    <!-- 3D Card Deck Arena for Fresh Juices (Much Larger & Visually Dominant on Desktop) -->
+    <div class="relative max-w-xl sm:max-w-2xl md:max-w-3xl lg:max-w-5xl xl:max-w-6xl 2xl:max-w-[1440px] mx-auto flex items-center justify-center min-h-[600px] sm:min-h-[680px] md:min-h-[760px] lg:min-h-[880px] xl:min-h-[960px] 2xl:min-h-[1020px] px-2 sm:px-6 lg:px-12">
       
       <!-- Circular Left Throw Button -->
       <button id="juice-prev-btn" 
               type="button" 
-              class="absolute -left-2 sm:-left-4 md:-left-8 lg:-left-16 xl:-left-20 top-1/2 -translate-y-1/2 z-40 w-11 h-11 sm:w-12 sm:h-12 lg:w-14 lg:h-14 rounded-full bg-white shadow-xl lg:shadow-2xl border border-slate-100 flex items-center justify-center text-slate-700 hover:text-amber-700 hover:scale-110 active:scale-90 transition-all focus:outline-none"
+              class="absolute -left-2 sm:-left-4 md:-left-6 lg:-left-8 xl:-left-12 2xl:-left-16 top-1/2 -translate-y-1/2 z-40 w-11 h-11 sm:w-12 sm:h-12 lg:w-16 lg:h-16 xl:w-18 xl:h-18 rounded-full bg-white shadow-xl lg:shadow-2xl border border-slate-100 flex items-center justify-center text-slate-700 hover:text-amber-700 hover:scale-110 active:scale-90 transition-all focus:outline-none"
               title="Swipe Left"
               aria-label="Previous Juice Drink">
-        <svg class="w-5 h-5 lg:w-6 lg:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg class="w-5 h-5 lg:w-7 lg:h-7 xl:w-8 xl:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/>
         </svg>
       </button>
@@ -194,16 +194,16 @@ require_once __DIR__ . '/includes/header.php';
       <!-- Circular Right Throw Button -->
       <button id="juice-next-btn" 
               type="button" 
-              class="absolute -right-2 sm:-right-4 md:-right-8 lg:-right-16 xl:-right-20 top-1/2 -translate-y-1/2 z-40 w-11 h-11 sm:w-12 sm:h-12 lg:w-14 lg:h-14 rounded-full bg-white shadow-xl lg:shadow-2xl border border-slate-100 flex items-center justify-center text-slate-700 hover:text-amber-700 hover:scale-110 active:scale-90 transition-all focus:outline-none"
+              class="absolute -right-2 sm:-right-4 md:-right-6 lg:-right-8 xl:-right-12 2xl:-right-16 top-1/2 -translate-y-1/2 z-40 w-11 h-11 sm:w-12 sm:h-12 lg:w-16 lg:h-16 xl:w-18 xl:h-18 rounded-full bg-white shadow-xl lg:shadow-2xl border border-slate-100 flex items-center justify-center text-slate-700 hover:text-amber-700 hover:scale-110 active:scale-90 transition-all focus:outline-none"
               title="Swipe Right"
               aria-label="Next Juice Drink">
-        <svg class="w-5 h-5 lg:w-6 lg:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg class="w-5 h-5 lg:w-7 lg:h-7 xl:w-8 xl:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/>
         </svg>
       </button>
 
-      <!-- The 3D Physical Stack Container for Juices (Wider, taller, and visually dominant on desktop) -->
-      <div id="juice-deck" class="deck-stage relative w-[calc(100vw-36px)] max-w-[350px] sm:max-w-[420px] md:max-w-[460px] lg:max-w-[520px] xl:max-w-[560px] h-[570px] sm:h-[620px] md:h-[660px] lg:h-[720px] xl:h-[750px] select-none perspective-[1200px]">
+      <!-- The 3D Physical Stack Container for Juices (Visually large, prominent & dominant on desktop: 780px to 1020px) -->
+      <div id="juice-deck" class="deck-stage relative w-[calc(100vw-32px)] max-w-[370px] sm:max-w-[480px] md:max-w-[580px] lg:max-w-[780px] xl:max-w-[900px] 2xl:max-w-[1020px] h-[590px] sm:h-[660px] md:h-[740px] lg:h-[860px] xl:h-[930px] 2xl:h-[980px] select-none perspective-[1400px]">
         <?php foreach ($juiceProducts as $idx => $product): ?>
           <!-- Individual Physical Card in 3D Stack -->
           <div class="deck-card absolute inset-0 cursor-grab active:cursor-grabbing will-change-transform" data-index="<?= $idx ?>">

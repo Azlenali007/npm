@@ -63,49 +63,68 @@ $coupons = $db->query("SELECT * FROM coupons ORDER BY id DESC")->fetchAll();
     </div>
   <?php endif; ?>
 
-  <div class="rounded-3xl bg-slate-950 border border-slate-800 overflow-hidden shadow-sm">
-    <div class="overflow-x-auto">
-      <table class="w-full text-left text-xs">
-        <thead>
-          <tr class="border-b border-slate-800 text-slate-400 font-bold uppercase tracking-wider bg-slate-900/40">
-            <th class="py-3.5 px-4">Coupon Code</th>
-            <th class="py-3.5 px-3">Description</th>
-            <th class="py-3.5 px-3">Discount</th>
-            <th class="py-3.5 px-3">Min Order</th>
-            <th class="py-3.5 px-3">Status</th>
-            <th class="py-3.5 px-4 text-right">Actions</th>
-          </tr>
-        </thead>
-        <tbody class="divide-y divide-slate-800">
-          <?php foreach ($coupons as $c): ?>
-            <tr class="hover:bg-slate-900/60 transition-colors">
-              <td class="py-3 px-4 font-mono font-bold text-white text-sm">
-                <?= e($c['code']) ?>
-              </td>
-              <td class="py-3 px-3 text-slate-300">
-                <?= e($c['description']) ?>
-              </td>
-              <td class="py-3 px-3 font-bold text-emerald-400">
-                <?= $c['discount_type'] === 'percentage' ? (float)$c['discount_value'] . '%' : format_price($c['discount_value']) ?>
-              </td>
-              <td class="py-3 px-3 text-slate-400 font-serif">
-                <?= format_price($c['min_order_amount']) ?>
-              </td>
-              <td class="py-3 px-3">
-                <a href="/admin/coupons.php?toggle=<?= $c['id'] ?>" class="px-2.5 py-1 rounded-full text-[10px] font-bold inline-block <?= $c['is_active'] ? 'bg-emerald-950 text-emerald-300 border border-emerald-800' : 'bg-slate-800 text-slate-400' ?>">
-                  <?= $c['is_active'] ? 'Active' : 'Disabled' ?>
-                </a>
-              </td>
-              <td class="py-3 px-4 text-right">
-                <a href="/admin/coupons.php?delete=<?= $c['id'] ?>" onclick="return confirm('Delete coupon?')" class="px-3 py-1.5 rounded-lg bg-rose-950 text-rose-300 hover:bg-rose-900 text-xs font-semibold">
-                  Delete
-                </a>
-              </td>
-            </tr>
-          <?php endforeach; ?>
-        </tbody>
-      </table>
-    </div>
+  <!-- Coupons - Responsive Card Grid (No Table) -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+    <?php foreach ($coupons as $c): ?>
+      <div class="p-6 rounded-3xl bg-[#09160e] border border-emerald-900/40 hover:border-emerald-600/60 transition-all flex flex-col justify-between space-y-4 group shadow-xl relative overflow-hidden">
+        
+        <!-- Voucher Header & Code -->
+        <div class="space-y-3">
+          <div class="flex items-center justify-between gap-2">
+            <span class="text-[10px] uppercase font-bold tracking-widest text-emerald-400">Jaora Offer</span>
+            
+            <a href="/admin/coupons.php?toggle=<?= $c['id'] ?>" 
+               class="px-2.5 py-1 rounded-full text-[10px] font-black transition-colors <?= $c['is_active'] ? 'bg-emerald-950 text-emerald-300 border border-emerald-800' : 'bg-slate-900 text-slate-400 border border-slate-700' ?>">
+              <?= $c['is_active'] ? '● Active' : '● Disabled' ?>
+            </a>
+          </div>
+
+          <!-- Dashed Promo Code Pill -->
+          <div class="p-3 rounded-2xl bg-[#061009] border-2 border-dashed border-emerald-800/80 flex items-center justify-between">
+            <span class="font-mono font-black text-lg text-white tracking-widest">
+              <?= e($c['code']) ?>
+            </span>
+            <span class="px-2 py-0.5 rounded-lg bg-emerald-950 text-emerald-300 font-extrabold text-xs">
+              <?= $c['discount_type'] === 'percentage' ? (float)$c['discount_value'] . '% OFF' : format_price($c['discount_value']) . ' OFF' ?>
+            </span>
+          </div>
+
+          <p class="text-xs text-slate-300 leading-relaxed">
+            <?= e($c['description']) ?>
+          </p>
+        </div>
+
+        <!-- Terms & Min Order -->
+        <div class="pt-3 border-t border-emerald-950 space-y-2.5 text-xs">
+          <div class="flex items-center justify-between text-slate-400">
+            <span>Minimum Order:</span>
+            <span class="font-bold text-white"><?= format_price($c['min_order_amount']) ?></span>
+          </div>
+
+          <?php if (!empty($c['max_discount_amount'])): ?>
+            <div class="flex items-center justify-between text-slate-400">
+              <span>Max Discount:</span>
+              <span class="font-bold text-white"><?= format_price($c['max_discount_amount']) ?></span>
+            </div>
+          <?php endif; ?>
+
+          <!-- Action Buttons -->
+          <div class="pt-2 flex items-center justify-between gap-2 border-t border-emerald-950">
+            <a href="/admin/coupons.php?toggle=<?= $c['id'] ?>" 
+               class="text-xs font-bold <?= $c['is_active'] ? 'text-amber-400 hover:underline' : 'text-emerald-400 hover:underline' ?>">
+              <?= $c['is_active'] ? 'Disable Coupon' : 'Enable Coupon' ?>
+            </a>
+
+            <a href="/admin/coupons.php?delete=<?= $c['id'] ?>" 
+               onclick="return confirm('Delete coupon <?= e(addslashes($c['code'])) ?>?')" 
+               class="px-3 py-1.5 rounded-xl bg-rose-950/60 hover:bg-rose-900 border border-rose-900/60 text-rose-300 text-xs font-semibold transition-colors">
+              Delete
+            </a>
+          </div>
+        </div>
+
+      </div>
+    <?php endforeach; ?>
   </div>
 
   <!-- ADD COUPON MODAL -->
