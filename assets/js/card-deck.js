@@ -3,7 +3,8 @@
  * Physical Tinder-style card deck interaction using HTML5, CSS3, Vanilla JavaScript, and GSAP.
  * 
  * Features:
- * - Stacked 3D visual hierarchy (Front, Next behind, 3rd, 4th)
+ * - Responsive 3D visual hierarchy (Front, 2nd, 3rd, 4th cards behind)
+ * - Proportional desktop & mobile stack offsets
  * - Physical touchmove / mousemove follow with dynamic rotation and scale
  * - Smooth progressive reveal of card underneath as top card is pulled away
  * - Velocity + distance swipe threshold detection
@@ -43,12 +44,25 @@ class CardDeck {
     this.setupStack(false);
     this.bindEvents();
     this.createOrUpdateDots();
+
+    // Adjust stack on window resize (mobile <-> desktop)
+    window.addEventListener('resize', () => {
+      if (!this.isDragging && !this.isAnimating) {
+        this.setupStack(false);
+      }
+    });
+  }
+
+  getStepY() {
+    return window.innerWidth >= 1024 ? 22 : 14;
   }
 
   /**
    * Arranges cards in 3D stack based on distance from current front card.
    */
   setupStack(animate = true) {
+    const stepY = this.getStepY();
+
     this.cards.forEach((card, i) => {
       // relative offset from front card (0 = active front, 1 = behind, 2 = further behind, etc.)
       const offset = (i - this.currentIndex + this.totalCards) % this.totalCards;
@@ -69,25 +83,25 @@ class CardDeck {
       } else if (offset === 1) {
         // 2nd (Slightly behind, peeking with reduced scale)
         scale = 0.94;
-        y = 16;
+        y = stepY;
         zIndex = 30;
         opacity = 0.96;
       } else if (offset === 2) {
         // 3rd (Further behind)
         scale = 0.88;
-        y = 32;
+        y = stepY * 2;
         zIndex = 20;
         opacity = 0.86;
       } else if (offset === 3) {
         // 4th (Base of visible deck)
         scale = 0.82;
-        y = 48;
+        y = stepY * 3;
         zIndex = 10;
         opacity = 0.65;
       } else {
         // Deeper cards hidden
         scale = 0.76;
-        y = 60;
+        y = stepY * 4;
         zIndex = 0;
         opacity = 0;
       }
@@ -159,7 +173,7 @@ class CardDeck {
       });
     }
 
-    // Intercept clicks on cards when dragging
+    // Intercept clicks on cards when dragging has occurred
     this.cards.forEach(card => {
       card.addEventListener('click', (e) => {
         if (this.hasMoved) {
@@ -173,10 +187,10 @@ class CardDeck {
   handleDragStart(e) {
     if (this.isAnimating) return;
 
-    // Do not initiate drag if user clicked an interactive button directly without dragging
+    // If user clicked directly on interactive form controls/buttons, allow natural click
     const target = e.target;
     if (target.closest('button, a, input, select')) {
-      // Let button clicks proceed
+      // Allow button click to proceed
     }
 
     const point = e.touches ? e.touches[0] : e;
@@ -204,20 +218,23 @@ class CardDeck {
     const deltaX = this.currentX - this.startX;
     const deltaY = this.currentY - this.startY;
 
-    if (Math.hypot(deltaX, deltaY) > 8) {
+    if (Math.hypot(deltaX, deltaY) > 6) {
       this.hasMoved = true;
       if (e.cancelable && e.touches) {
-        e.preventDefault(); // lock vertical page scrolling while swiping card
+        e.preventDefault(); // lock vertical page scrolling while actively swiping 3D card
       }
     }
 
     const frontCard = this.getFrontCard();
     if (!frontCard) return;
 
-    // Rotation dynamically responds to swipe distance
-    const rotation = deltaX * 0.08;
-    const liftY = deltaY * 0.25;
-    const scale = Math.max(0.95, 1 - Math.abs(deltaX) / 2500);
+    const isDesktop = window.innerWidth >= 1024;
+    const stepY = this.getStepY();
+
+    // Smooth rotation dynamically responding to swipe distance
+    const rotation = deltaX * 0.055; // gentle, natural tilt
+    const liftY = deltaY * 0.2;
+    const scale = Math.max(0.96, 1 - Math.abs(deltaX) / 3200);
 
     if (typeof gsap !== 'undefined') {
       gsap.set(frontCard, {
@@ -229,12 +246,13 @@ class CardDeck {
       });
 
       // Smoothly lift the card underneath forward in 3D depth
-      const progress = Math.min(1, Math.abs(deltaX) / 180);
+      const maxDist = isDesktop ? 220 : 160;
+      const progress = Math.min(1, Math.abs(deltaX) / maxDist);
       const nextCard = this.getNextCard();
       if (nextCard) {
         gsap.set(nextCard, {
           scale: 0.94 + 0.06 * progress,
-          y: 16 - 16 * progress,
+          y: stepY - stepY * progress,
           opacity: 0.96 + 0.04 * progress,
           transformOrigin: '50% 100%'
         });
@@ -244,7 +262,7 @@ class CardDeck {
       if (thirdCard) {
         gsap.set(thirdCard, {
           scale: 0.88 + 0.06 * progress,
-          y: 32 - 16 * progress,
+          y: (stepY * 2) - stepY * progress,
           opacity: 0.86 + 0.10 * progress,
           transformOrigin: '50% 100%'
         });
@@ -265,8 +283,11 @@ class CardDeck {
     const elapsed = Math.max(1, Date.now() - this.startTime);
     const velocity = deltaX / elapsed;
 
-    // Threshold: moved > 90px OR fast flick velocity > 0.4
-    if (Math.abs(deltaX) > 90 || Math.abs(velocity) > 0.4) {
+    const isDesktop = window.innerWidth >= 1024;
+    const swipeThreshold = isDesktop ? 120 : 80;
+
+    // Threshold: moved > threshold OR fast flick velocity > 0.42
+    if (Math.abs(deltaX) > swipeThreshold || Math.abs(velocity) > 0.42) {
       const direction = deltaX > 0 ? 1 : -1;
       this.completeSwipe(direction);
     } else {
@@ -278,16 +299,16 @@ class CardDeck {
   completeSwipe(direction) {
     this.isAnimating = true;
     const frontCard = this.getFrontCard();
-    const throwDistance = (window.innerWidth || 800) + 200;
+    const throwDistance = (window.innerWidth || 1200) + 300;
     const exitX = direction * throwDistance;
-    const exitRotation = direction * 35;
+    const exitRotation = direction * 28;
 
     if (typeof gsap !== 'undefined') {
       // 1. Physically throw front card outside visible stack
       gsap.to(frontCard, {
         x: exitX,
         rotation: exitRotation,
-        scale: 0.9,
+        scale: 0.92,
         opacity: 0,
         duration: 0.38,
         ease: 'power2.out',
@@ -313,9 +334,10 @@ class CardDeck {
 
       const thirdCard = this.getThirdCard();
       if (thirdCard) {
+        const stepY = this.getStepY();
         gsap.to(thirdCard, {
           scale: 0.94,
-          y: 16,
+          y: stepY,
           opacity: 0.96,
           duration: 0.38,
           ease: 'power2.out'
@@ -338,22 +360,23 @@ class CardDeck {
         y: 0,
         rotation: 0,
         scale: 1,
-        duration: 0.45,
-        ease: 'elastic.out(1, 0.65)',
+        duration: 0.48,
+        ease: 'elastic.out(1, 0.75)',
         onComplete: () => {
           this.isAnimating = false;
           this.setupStack(false);
         }
       });
 
+      const stepY = this.getStepY();
       const nextCard = this.getNextCard();
       if (nextCard) {
-        gsap.to(nextCard, { scale: 0.94, y: 16, opacity: 0.96, duration: 0.35, ease: 'power2.out' });
+        gsap.to(nextCard, { scale: 0.94, y: stepY, opacity: 0.96, duration: 0.35, ease: 'power2.out' });
       }
 
       const thirdCard = this.getThirdCard();
       if (thirdCard) {
-        gsap.to(thirdCard, { scale: 0.88, y: 32, opacity: 0.86, duration: 0.35, ease: 'power2.out' });
+        gsap.to(thirdCard, { scale: 0.88, y: stepY * 2, opacity: 0.86, duration: 0.35, ease: 'power2.out' });
       }
     } else {
       this.isAnimating = false;
@@ -375,7 +398,6 @@ class CardDeck {
   createOrUpdateDots() {
     if (!this.dotsContainer) return;
 
-    // If dots don't exist yet, build them
     if (this.dotsContainer.children.length === 0) {
       for (let i = 0; i < this.totalCards; i++) {
         const dot = document.createElement('button');
@@ -393,8 +415,8 @@ class CardDeck {
       dots.forEach((dot, idx) => {
         if (idx === this.currentIndex) {
           dot.style.backgroundColor = this.accentColor;
-          dot.style.width = '12px';
-          dot.style.height = '12px';
+          dot.style.width = '14px';
+          dot.style.height = '14px';
         } else {
           dot.style.backgroundColor = '#d1fae5';
           dot.style.width = '10px';
