@@ -1,0 +1,13 @@
+{
+  "name": "na-fresh-fruits-coconuts",
+  "private": true,
+  "version": "1.0.0",
+  "description": "N.A Fresh Fruits & Coconuts - Jaora, Madhya Pradesh",
+  "type": "module",
+  "scripts": {
+    "dev": "bash run-server.sh",
+    "build": "php -l router.php",
+    "clean": "rm -rf *.log",
+    "lint": "php -l router.php"
+  }
+}

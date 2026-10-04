@@ -1,0 +1,6 @@
+{
+  "name": "N.A Fresh Fruits & Coconuts",
+  "description": "Premium online ordering for fresh coconut water and freshly prepared juices in Jaora, Madhya Pradesh.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
