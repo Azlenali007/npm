@@ -71,10 +71,10 @@ $pageDesc = $pageDesc ?? 'Order 100% raw tender coconut water and freshly squeez
   }
   </script>
 
-  <!-- Google Fonts: Plus Jakarta Sans & Fraunces (Premium Editorial Botanical) -->
+  <!-- Google Fonts: Plus Jakarta Sans, Caveat (Cursive script), and Fraunces -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;1,9..144,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <!-- Tailwind CSS Play CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -93,7 +93,7 @@ $pageDesc = $pageDesc ?? 'Order 100% raw tender coconut water and freshly squeez
               600: '#16a34a',
               700: '#15803d',
               800: '#166534',
-              900: '#14532d',
+              900: '#0b3b24',
               950: '#052e16',
             },
             coconut: {
@@ -112,6 +112,7 @@ $pageDesc = $pageDesc ?? 'Order 100% raw tender coconut water and freshly squeez
           fontFamily: {
             sans: ['"Plus Jakarta Sans"', 'sans-serif'],
             serif: ['"Fraunces"', 'serif'],
+            script: ['"Caveat"', 'cursive'],
           }
         }
       }
@@ -178,42 +179,62 @@ $pageDesc = $pageDesc ?? 'Order 100% raw tender coconut water and freshly squeez
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-20">
         
-        <!-- Brand Logo -->
+        <!-- Brand Logo matching reference -->
         <a href="/" class="flex items-center gap-3 group focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-600 rounded-lg">
-          <div class="w-11 h-11 rounded-2xl bg-brand-900 flex items-center justify-center text-white shadow-md shadow-brand-950/20 group-hover:scale-105 transition-transform duration-200">
-            <!-- Fresh Coconut Leaf / Drink SVG Icon -->
-            <svg class="w-6 h-6 text-brand-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9 9 0 0 0 9-9c0-4.97-4.03-9-9-9S3 7.03 3 12a9 9 0 0 0 9 9z"/>
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v9l5 5"/>
-              <path stroke-linecap="round" stroke-linejoin="round" d="M8 8a4 4 0 0 1 8 0"/>
+          <!-- Coconut outline with palm leaves icon -->
+          <div class="w-12 h-12 flex items-center justify-center text-brand-600 transition-transform duration-200 group-hover:scale-105">
+            <svg class="w-11 h-11" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Coconut body with green gradient -->
+              <ellipse cx="30" cy="38" rx="20" ry="18" fill="#22c55e" stroke="#15803d" stroke-width="2.5" />
+              <!-- Coconut sliced top opening -->
+              <path d="M19 28 C23 22, 37 22, 41 28 C37 32, 23 32, 19 28 Z" fill="#ffffff" stroke="#15803d" stroke-width="2" />
+              <!-- Coconut water & inner shell ring -->
+              <ellipse cx="30" cy="28" rx="8" ry="3.5" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5" />
+              <!-- Palm leaves on top -->
+              <path d="M30 22 C30 10, 44 8, 48 10 C46 16, 38 18, 30 22 Z" fill="#16a34a" />
+              <path d="M28 22 C22 12, 12 14, 10 18 C16 22, 22 22, 28 22 Z" fill="#15803d" />
+              <!-- Eco straw -->
+              <line x1="30" y1="28" x2="38" y2="12" stroke="#166534" stroke-width="2.5" stroke-linecap="round" />
             </svg>
           </div>
           <div class="flex flex-col">
-            <span class="font-serif font-bold text-xl sm:text-2xl text-brand-950 leading-tight tracking-tight">
-              N.A Fresh <span class="text-brand-600">& Coconuts</span>
+            <div class="flex items-baseline gap-1.5">
+              <span class="font-extrabold text-2xl text-slate-900 leading-none tracking-tight">N.A</span>
+            </div>
+            <span class="font-bold text-sm text-slate-900 leading-tight tracking-tight">
+              Fresh Fruits & Coconuts
             </span>
-            <span class="text-[10px] sm:text-xs text-slate-500 font-medium tracking-wider uppercase">
-              Jaora's Pure Coconut & Juice Hub
+            <span class="text-[9px] text-slate-500 font-semibold tracking-widest uppercase mt-0.5">
+              FRESH • HEALTHY • NATURAL
             </span>
           </div>
         </a>
 
         <!-- Desktop Navigation Links -->
-        <nav class="hidden lg:flex items-center gap-8 text-sm font-semibold text-slate-700">
+        <nav class="hidden lg:flex items-center gap-7 text-sm font-semibold text-slate-700">
           <a href="/" class="hover:text-brand-700 transition-colors">Home</a>
           <a href="/#coconuts" class="hover:text-brand-700 transition-colors flex items-center gap-1.5">
             <span>Coconut Water</span>
-            <span class="text-[10px] font-bold uppercase tracking-wider text-brand-600 bg-brand-50 px-1.5 py-0.5 rounded">Fresh Cut</span>
+            <span class="text-[10px] font-bold uppercase tracking-wider text-brand-600 bg-brand-50 px-1.5 py-0.5 rounded">Hero</span>
           </a>
           <a href="/#juices" class="hover:text-brand-700 transition-colors">Fresh Juices</a>
           <a href="/products.php" class="hover:text-brand-700 transition-colors">Full Menu</a>
           <a href="/#why-us" class="hover:text-brand-700 transition-colors">Why Choose Us</a>
-          <a href="/#delivery-areas" class="hover:text-brand-700 transition-colors">Delivery Areas</a>
+          <a href="/#delivery-areas" class="hover:text-brand-700 transition-colors">Delivery in Jaora</a>
         </nav>
 
-        <!-- Right Action Items (Zomato, User, Cart, Order Button) -->
-        <div class="flex items-center gap-3">
+        <!-- Right Action Items (Search, Zomato, Cart, Hamburger) -->
+        <div class="flex items-center gap-3 sm:gap-4">
           
+          <!-- Search Icon Button -->
+          <a href="/products.php" 
+             class="p-2 text-slate-700 hover:text-brand-700 hover:bg-slate-100 rounded-full transition-colors"
+             aria-label="Search drinks and coconuts">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+            </svg>
+          </a>
+
           <!-- Zomato Button (Admin Controlled) -->
           <?php if ($zomatoEnabled): ?>
           <a href="<?= e($zomatoUrl) ?>" target="_blank" rel="noopener noreferrer" 
@@ -226,47 +247,36 @@ $pageDesc = $pageDesc ?? 'Order 100% raw tender coconut water and freshly squeez
 
           <!-- User Account / Login -->
           <?php if ($user): ?>
-            <a href="/account.php" class="hidden sm:flex items-center gap-2 p-2 rounded-xl text-slate-700 hover:text-brand-800 hover:bg-slate-100 transition-colors text-sm font-medium" title="My Account">
-              <div class="w-8 h-8 rounded-full bg-brand-100 text-brand-800 flex items-center justify-center font-bold text-xs">
+            <a href="/account.php" class="hidden sm:flex items-center gap-2 p-1.5 rounded-xl text-slate-700 hover:text-brand-800 hover:bg-slate-100 transition-colors text-xs font-semibold" title="My Account">
+              <div class="w-7 h-7 rounded-full bg-brand-100 text-brand-800 flex items-center justify-center font-bold text-xs">
                 <?= strtoupper(substr($user['name'], 0, 1)) ?>
               </div>
-              <span class="max-w-[100px] truncate"><?= e(explode(' ', $user['name'])[0]) ?></span>
-            </a>
-          <?php else: ?>
-            <a href="/login.php" class="hidden sm:inline-flex text-xs font-semibold text-slate-600 hover:text-brand-700 px-3 py-2 rounded-lg hover:bg-slate-100 transition-colors">
-              Sign In
+              <span class="max-w-[80px] truncate"><?= e(explode(' ', $user['name'])[0]) ?></span>
             </a>
           <?php endif; ?>
 
-          <!-- Shopping Cart Trigger Button -->
+          <!-- Shopping Cart Trigger Button (Matching reference icon & pill badge) -->
           <button @click="openCart()" 
                   type="button"
-                  class="relative p-2.5 rounded-xl bg-slate-100 text-slate-800 hover:bg-brand-50 hover:text-brand-700 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-600"
+                  class="relative p-2 text-slate-800 hover:text-brand-700 transition-all focus:outline-none"
                   aria-label="View Shopping Cart">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
             </svg>
             <span x-text="cartCount" 
-                  class="absolute -top-1 -right-1 min-w-[20px] h-5 px-1 rounded-full bg-brand-600 text-white text-[11px] font-bold flex items-center justify-center shadow"
+                  class="absolute -top-1 -right-1 min-w-[20px] h-5 px-1 rounded-full bg-[#064e3b] text-white text-[11px] font-bold flex items-center justify-center shadow"
                   :class="{'animate-bounce': cartUpdated}">
               <?= $cartCount ?>
             </span>
           </button>
 
-          <!-- Order Now CTA (Desktop) -->
-          <a href="/#coconuts" 
-             class="hidden md:inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-brand-700 hover:bg-brand-800 text-white font-semibold text-sm shadow-sm hover:shadow transition-all duration-200">
-            <span>Order Now</span>
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-          </a>
-
           <!-- Mobile Menu Hamburger Button -->
           <button @click="mobileMenuOpen = !mobileMenuOpen" 
                   type="button" 
-                  class="lg:hidden p-2 rounded-xl text-slate-700 hover:bg-slate-100 focus:outline-none"
+                  class="p-2 text-slate-800 hover:bg-slate-100 rounded-xl focus:outline-none"
                   aria-label="Toggle navigation">
             <svg x-show="!mobileMenuOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
             </svg>
             <svg x-show="mobileMenuOpen" x-cloak class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
